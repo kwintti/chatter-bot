@@ -37,8 +37,8 @@ func main() {
 }
 
 func getClient() *openai.Client {
-    client := openai.NewClient(os.Getenv(API_KEY))
-    client.BaseUrl = os.Getenv(BASE_URL)
+    client := openai.NewClient(os.Getenv("TOKEN"))
+    client.BaseUrl = os.Getenv("BASE_URL")
 
     return client
 }
