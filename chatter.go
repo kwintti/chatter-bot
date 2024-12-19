@@ -1,11 +1,15 @@
 package main
 
 import (
+	"bufio"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-    openai "github.com/sashabaranov/go-openai"
+
+	"github.com/joho/godotenv"
+	openai "github.com/sashabaranov/go-openai"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -30,18 +34,56 @@ func loadPage(title string) *Page {
 }
 
 func main() {
-    http.HandleFunc("/", handler)
-    http.HandleFunc("/view/", viewHandler)
-    fmt.Println("Listening on :8080")
-    log.Fatal(http.ListenAndServe(":8080", nil))
+    err := godotenv.Load()
+    if err != nil {
+        log.Println("Couldn't load .env file", err)
+    }
+    // http.HandleFunc("/", handler)
+    // http.HandleFunc("/view/", viewHandler)
+    // fmt.Println("Listening on :8080")
+    // log.Fatal(http.ListenAndServe(":8080", nil))
+    fmt.Println("Miten voin auttaa?:")
+    scanner := bufio.NewScanner(os.Stdin)
+    scanner.Scan()
+    err = scanner.Err()
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Printf(chatter(scanner.Text()))
+
 }
 
 func getClient() *openai.Client {
-    client := openai.NewClient(os.Getenv("TOKEN"))
-    client.BaseUrl = os.Getenv("BASE_URL")
+    config := openai.DefaultConfig(os.Getenv("TOKEN"))
+    config.BaseURL = os.Getenv("BASE_URL") 
+
+    client := openai.NewClientWithConfig(config)
 
     return client
 }
 
+func chatter(msg string) string {
+    client := getClient()
+    resp, err := client.CreateChatCompletion(
+		context.Background(),
+		openai.ChatCompletionRequest{
+            Model: "meta-llama/Meta-Llama-3.1-8B-Instruct-fast",
+			Messages: []openai.ChatCompletionMessage{
+				{
+					Role:    openai.ChatMessageRoleSystem,
+					Content: msg,
+				},
+			},
+		},
+	)
+
+	if err != nil {
+		fmt.Printf("ChatCompletion error: %v\n", err)
+		return ""
+	}
+
+	return resp.Choices[0].Message.Content
+
+}
 
     

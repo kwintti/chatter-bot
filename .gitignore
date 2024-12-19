@@ -1,3 +1,4 @@
 chatter-bot
 .env
 *.txt
+tmp
