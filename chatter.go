@@ -71,7 +71,7 @@ func chatter(msg string) string {
 			Messages: []openai.ChatCompletionMessage{
 				{
 					Role:    openai.ChatMessageRoleSystem,
-					Content: msg,
+					Content: msg + ". Answer this as if you are gay.",
 				},
 			},
 		},
@@ -85,5 +85,3 @@ func chatter(msg string) string {
 	return resp.Choices[0].Message.Content
 
 }
-
-    
