@@ -2,3 +2,4 @@ chatter-bot
 .env
 *.txt
 tmp
+*_templ.go
