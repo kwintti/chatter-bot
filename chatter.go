@@ -54,7 +54,7 @@ func main() {
     if err != nil {
         log.Println("Couldn't load .env file", err)
     }
-    component := hello("JOhn")
+    component := chatterDiv("John")
     http.Handle("/", templ.Handler(component))
     // http.HandleFunc("/", handler)
     // http.HandleFunc("/view/", viewHandler)

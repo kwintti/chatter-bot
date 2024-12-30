@@ -1,6 +1,52 @@
 package main
 
-templ hello(name string) {
-    <div>Hello, {name}</div>
-}
+templ chatterDiv(name string) {
+<!doctype html>
+<html class="no-js" lang="">
 
+<head>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <title>Hello</title>
+  <link rel="stylesheet" href="css/style.css"></link>
+  <meta name="description" content=""></meta>
+
+  <meta property="og:title" content=""></meta>
+  <meta property="og:type" content=""></meta>
+  <meta property="og:url" content=""></meta>
+  <meta property="og:image" content=""></meta>
+  <meta property="og:image:alt" content=""></meta>
+
+  <link rel="icon" href="/favicon.ico" sizes="any"></link>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml"></link>
+  <link rel="apple-touch-icon" href="icon.png"></link>
+
+  <link rel="manifest" href="site.webmanifest"></link>
+  <meta name="theme-color" content="#fafafa"></meta>
+  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!-- Add your site or application content here -->
+    <div style="align-content: center; text-align: center; height: 100vh;">
+        <div style="overflow-y: auto; overflow-x: hide; width: 50vw; height: 30vh; background-color: bisque;">Hello, {name}</div>
+        <input type="text" id="name" name="name" 
+            hx-post="/search" 
+            hx-trigger="keyup[key=='Enter'], load" 
+        required minlength="50vw" maxlength="50vw" size="20" />
+        <!--
+        <button hx-post="/clicked" hx-swap="outerHTML">
+            Click Me
+        </button>
+        <div hx-post="/mouse_entered" hx-trigger="mouseenter">
+            [Here Mouse, Mouse!]
+        </div>
+        -->
+    </div>
+
+</body>
+
+</html>
+
+}
