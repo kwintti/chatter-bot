@@ -30,10 +30,12 @@ templ chatterDiv(name string) {
 
   <!-- Add your site or application content here -->
     <div style="align-content: center; text-align: center; height: 100vh;">
-        <div style="overflow-y: auto; overflow-x: hide; width: 50vw; height: 30vh; background-color: bisque;">Hello, {name}</div>
+        <div id="chat_window" style="overflow-y: auto; overflow-x: hide; width: 50vw; height: 30vh; background-color: bisque;">{messages}</div>
         <input type="text" id="name" name="name" 
             hx-post="/search" 
-            hx-trigger="keyup[key=='Enter'], load" 
+            hx-on::after-request="if(event.detail.succeful) this.reset()"
+            hx-trigger="keyup[key=='Enter']" 
+            hx-target="#chat_window"
         required minlength="50vw" maxlength="50vw" size="20" />
         <!--
         <button hx-post="/clicked" hx-swap="outerHTML">
